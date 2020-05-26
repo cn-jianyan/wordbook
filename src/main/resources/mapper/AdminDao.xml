@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java1234.dao.AdminDao">
+
+    <!--查询单个-->
+    <select id="queryById" resultType="admin">
+        select
+          a_id, a_user, pwd, a_name, state, jointime
+        from personnel.admin
+        where a_id = #{a_id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultType="admin">
+        select
+          a_id, a_user, pwd, a_name, state, jointime
+        from personnel.admin
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultType="admin">
+        select
+          a_id, a_user, pwd, a_name, state, jointime
+        from personnel.admin
+        <where>
+            <if test="a_id != null">
+                and a_id = #{a_id}
+            </if>
+            <if test="a_user != null and a_user != ''">
+                and a_user = #{a_user}
+            </if>
+            <if test="pwd != null and pwd != ''">
+                and pwd = #{pwd}
+            </if>
+            <if test="a_name != null and a_name != ''">
+                and a_name = #{a_name}
+            </if>
+            <if test="state != null">
+                and state = #{state}
+            </if>
+            <if test="jointime != null">
+                and jointime = #{jointime}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="a_id" useGeneratedKeys="true"  parameterType="com.java1234.entity.Admin">
+        insert into personnel.admin(pwd, a_name,a_user,state, jointime)
+        values (#{pwd}, #{a_name},#{a_user}, #{state}, now())
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update" parameterType="com.java1234.entity.Admin">
+        update personnel.admin
+        <set>
+            <if test="pwd != null and pwd != ''">
+                pwd = #{pwd},
+            </if>
+            <if test="a_name != null and a_name != ''">
+                a_name = #{a_name},
+            </if>
+            <if test="state != null">
+                state = #{state},
+            </if>
+            <if test="jointime != null">
+                jointime = #{jointime},
+            </if>
+        </set>
+        where a_id = #{a_id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from personnel.admin where a_id = #{a_id}
+    </delete>
+
+</mapper>
