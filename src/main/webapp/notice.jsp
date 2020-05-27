@@ -2,6 +2,7 @@
 <%@ taglib prefix="fmt"
 		   uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,10 +39,10 @@
 
 				<td>
 					<div class="btn-group border " style="border-radius: 30px;">
-						<button type="button" class="btn "  data-toggle="modal" data-target="#modeldemo">新增</button>
-						<button type="button" class="btn " data-toggle="modal" data-target="#modeldemo"  data-whatever="${i.n_id}">修改</button>
-						<button type="button" class="btn " onclick="remove(this,${i.n_id})">删除</button>
-						<a href="<%=request.getContextPath()%>/notice/mail/1?n_id=${i.n_id}" class="btn">邮件发送</a>
+					<shiro:hasPermission name="notice:add"><button type="button" class="btn "  data-toggle="modal" data-target="#modeldemo">新增</button></shiro:hasPermission>
+						<shiro:hasPermission name="notice:update"><button type="button" class="btn " data-toggle="modal" data-target="#modeldemo"  data-whatever="${i.n_id}">修改</button></shiro:hasPermission>
+						<shiro:hasPermission name="notice:delete">	<button type="button" class="btn " onclick="remove(this,${i.n_id})">删除</button></shiro:hasPermission>
+						<shiro:hasPermission name="notice:mail"><a href="<%=request.getContextPath()%>/notice/mail/1?n_id=${i.n_id}" class="btn">邮件发送</a></shiro:hasPermission>
 					</div>
 				</td>
 			</tr>

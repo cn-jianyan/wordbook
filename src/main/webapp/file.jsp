@@ -2,6 +2,7 @@
 <%@ taglib prefix="fmt"
 		   uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -43,10 +44,10 @@
 				<td>${i.des}</td>
 				<td>
 					<div class="btn-group border " style="border-radius: 30px;">
-						<button type="button" class="btn "  data-toggle="modal" data-target="#modeldemo">新增</button>
-						<button type="button" class="btn " data-toggle="modal" data-target="#modeldemo"  data-whatever="${i.f_id}">修改</button>
-						<button type="button" class="btn " onclick="remove(this,${i.f_id})">删除</button>
-						<a  class="btn "  href="<%=request.getContextPath()%>/file/down/${i.f_id}">下载</a>
+						<shiro:hasPermission name="file:add"><button type="button" class="btn "  data-toggle="modal" data-target="#modeldemo">新增</button></shiro:hasPermission>
+						<shiro:hasPermission name="file:update"><button type="button" class="btn " data-toggle="modal" data-target="#modeldemo"  data-whatever="${i.f_id}">修改</button></shiro:hasPermission>
+						<shiro:hasPermission name="file:delete"><button type="button" class="btn " onclick="remove(this,${i.f_id})">删除</button></shiro:hasPermission>
+						<shiro:hasPermission name="file:download"><a  class="btn "  href="<%=request.getContextPath()%>/file/down/${i.f_id}">下载</a></shiro:hasPermission>
 					</div>
 				</td>
 			</tr>

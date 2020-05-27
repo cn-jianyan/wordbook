@@ -2,6 +2,7 @@
 <%@ taglib prefix="fmt"
 		   uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -59,10 +60,10 @@
 							</td>
 							<td>
 								<div class="btn-group border " style="border-radius: 30px;">
-									<button type="button" class="btn "  data-toggle="modal" data-target="#modeldemo">新增</button>
-									<button type="button" class="btn " data-toggle="modal" data-target="#modeldemo"  data-whatever="${i.a_id}">修改</button>
-									<button type="button" class="btn " onclick="delete(this,${i.a_id})">删除</button>
-									<a type="button" class="btn" href="<%=request.getContextPath()%>/admin/power/${i.a_id}/${i.a_user}">权限管理</a>
+								<shiro:hasPermission name="admin:add">	<button type="button" class="btn "  data-toggle="modal" data-target="#modeldemo">新增</button></shiro:hasPermission>
+									<shiro:hasPermission name="admin:update">	<button type="button" class="btn " data-toggle="modal" data-target="#modeldemo"  data-whatever="${i.a_id}">修改</button></shiro:hasPermission>
+									<shiro:hasPermission name="admin:delete">	<button type="button" class="btn " onclick="delete(this,${i.a_id})">删除</button></shiro:hasPermission>
+									<shiro:hasPermission name="admin:power"><a type="button" class="btn" href="<%=request.getContextPath()%>/admin/power/${i.a_id}/${i.a_user}">权限管理</a></shiro:hasPermission>
 								</div>
 							</td>
 						</tr>

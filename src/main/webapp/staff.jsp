@@ -2,6 +2,7 @@
 			<%@ taglib prefix="fmt"
 					   uri="http://java.sun.com/jsp/jstl/fmt" %>
 			<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="shiro" uri="http://shiro.apache.org/tags" %>
 			<!DOCTYPE html>
 			<html>
 			<head>
@@ -109,9 +110,9 @@
 							<td><fmt:formatDate value="${i.jointime}"/></td>
 							<td>
 								<div class="btn-group border " style="border-radius: 30px;">
-									<button type="button" class="btn "  data-toggle="modal" data-target="#modeldemo">新增</button>
-									<button type="button" class="btn " data-toggle="modal" data-target="#modeldemo"  data-whatever="${i.s_id}">修改</button>
-									<button type="button" class="btn " onclick="remove(this,${i.s_id})">删除</button>
+								<shiro:hasPermission name="staff:add">	<button type="button" class="btn "  data-toggle="modal" data-target="#modeldemo">新增</button></shiro:hasPermission>
+									<shiro:hasPermission name="staff:update">	<button type="button" class="btn " data-toggle="modal" data-target="#modeldemo"  data-whatever="${i.s_id}">修改</button></shiro:hasPermission>
+									<shiro:hasPermission name="staff:delete">	<button type="button" class="btn " onclick="remove(this,${i.s_id})">删除</button></shiro:hasPermission>
 
 								</div>
 							</td>
