@@ -137,7 +137,7 @@
 		if(a_id){
 			//修改
 			console.log(a_id);
-			modal.find('.modal-title').text('修改学员信息');
+			modal.find('.modal-title').text('修改文件信息');
 			$("#form").attr({"action":ul+"/file/update"});
 			// console.log($("#form").attr("action"));
 			// console.log($("#_method").val());
@@ -151,7 +151,7 @@
 			})
 		}
 		else{
-			modal.find('.modal-title').text('新增学员信息');
+			modal.find('.modal-title').text('新增文件');
 			$("#form").attr({"action":ul+"/file/add"});
 			$("#f_id").val("");
 			$("#f_name").val("");

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--命名空间是不可少的 一般是表名-->
+<mapper namespace="com.java1234.dao.HasPowerDao"> <!--namespace:命名空间，对sql进行分类管理-->
+    <select id="queryRole" resultType="java.lang.String">
+        SELECT r.`has` FROM role r , admin a ,hasrole h WHERE a.`a_id`=h.`aid` AND h.`rid`=r.`rid` and a_user=#{a_user};
+    </select>
+
+    <select id="queryRoleRname" resultType="java.lang.String">
+                SELECT r.rname FROM role r , admin a ,hasrole h WHERE a.`a_id`=h.`aid` AND h.`rid`=r.`rid` and a_user=#{a_user};
+    </select>
+
+    <select id="queryPower" resultType="java.lang.String">
+        SELECT p.has FROM personnel.`power` p , haspower , admin  WHERE  haspower.`pid`=p.pid AND haspower.`aid`=admin.`a_id` AND   admin.`a_user`=#{a_user};
+    </select>
+
+    <insert id="role" >
+        insert into hasrole(rid,aid) values
+        <foreach collection="li" item="i" separator=",">
+            (#{i},#{aid})
+        </foreach>
+    </insert>
+
+    <delete id="deleteRole" >
+          delete from hasrole where aid=#{aid};
+    </delete>
+
+    <insert id="power" >
+        insert into haspower(pid,aid) values
+        <foreach collection="li" item="i" separator=",">
+            (#{i},#{aid})
+        </foreach>
+    </insert>
+
+    <delete id="deletePower" >
+          delete from haspower where aid=#{aid};
+    </delete>
+
+
+</mapper>

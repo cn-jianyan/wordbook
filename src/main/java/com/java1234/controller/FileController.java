@@ -61,30 +61,29 @@ public class FileController {
     }
 
     @RequestMapping("/add")
-    public  String add( @RequestParam("file") MultipartFile file, File d,HttpServletRequest req){
+    public  String add( @RequestParam("file") MultipartFile file, File d,HttpServletRequest req,HttpSession session){
         System.out.println("进入添加文件");
-        if(file==null||file.isEmpty()){
-            System.out.println("文件为空");
-            return "forward:/file/index/1";
-        }
-        Admin a=(Admin) req.getSession().getAttribute("admin");
+        System.out.println(file);
+        d.setState(1);
+        Admin a=(Admin) session.getAttribute("admin");
         d.setA_id(a.getA_id());
-        String oldname=file.getOriginalFilename();//文件后缀
-        String newname= UUID.randomUUID().toString()+oldname.substring(oldname.lastIndexOf("."));//新的文件名
-        java.io.File folder=new java.io.File(req.getServletContext().getRealPath("/file"));
-        System.out.println(folder);
-        if (!folder.exists()) {
-            folder.mkdirs();
-        }
-        try{
-            //transferTo方法写入
-            file.transferTo(new java.io.File(folder,newname));//File（文件夹，文件名）
-            d.setLu("/file/"+newname);
+        if(file!=null&&!file.isEmpty()){
+            String oldname=file.getOriginalFilename();//文件后缀
+            String newname= UUID.randomUUID().toString()+oldname.substring(oldname.lastIndexOf("."));//新的文件名
+            java.io.File folder=new java.io.File(req.getServletContext().getRealPath("/file"));
+            if (!folder.exists()) {
+                folder.mkdirs();
+            }
+            try{
+                //transferTo方法写入
+                file.transferTo(new java.io.File(folder,newname));//File（文件夹，文件名）
+                d.setLu("/file/"+newname);
 
-        }catch (Exception e){
-            e.printStackTrace();
-            return "forward:/file/index/1";
+            }catch (Exception e){
+                return "forward:/file/index/1";
+            }
         }
+
         fileService.insert(d);
         return "forward:/file/index/1";
     }

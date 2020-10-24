@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java1234.dao.PowerDao">
+
+    <resultMap type="com.java1234.entity.Power" id="PowerMap">
+        <result property="pid" column="pid" jdbcType="INTEGER"/>
+        <result property="pname" column="pname" jdbcType="VARCHAR"/>
+        <result property="has" column="has" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="PowerMap">
+        select
+          pid, pname, has
+        from personnel.power
+        where pid = #{pid}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="PowerMap">
+        select
+          pid, pname, has
+        from personnel.power
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="PowerMap">
+        select
+          pid, pname, has
+        from personnel.power
+        <where>
+            <if test="pid != null">
+                and pid = #{pid}
+            </if>
+            <if test="pname != null and pname != ''">
+                and pname = #{pname}
+            </if>
+            <if test="has != null and has != ''">
+                and has = #{has}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="pid" useGeneratedKeys="true">
+        insert into personnel.power(pname, has)
+        values (#{pname}, #{has})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update personnel.power
+        <set>
+            <if test="pname != null and pname != ''">
+                pname = #{pname},
+            </if>
+            <if test="has != null and has != ''">
+                has = #{has},
+            </if>
+        </set>
+        where pid = #{pid}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from personnel.power where pid = #{pid}
+    </delete>
+
+</mapper>

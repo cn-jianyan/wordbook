@@ -9,9 +9,9 @@
     <meta charset="utf-8">
     <title></title>
     <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/dist/css/bootstrap.css"/>
-    <%--<script src="<%=request.getContextPath()%>/js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
-  --%>
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="<%=request.getContextPath()%>/js/jquery-3.4.1.min.js" type="text/javascript" charset="utf-8"></script>
+
+<%--    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>--%>
     <script src="<%=request.getContextPath()%>/dist/js/bootstrap.bundle.js" type="text/javascript" charset="utf-8"></script>
 
     <style type="text/css">

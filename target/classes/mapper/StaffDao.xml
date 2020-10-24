@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.java1234.dao.StaffDao">
+
+
+
+    <!--查询单个-->
+    <select id="queryById" resultType="com.java1234.entity.Staff">
+        SELECT s.*,j.j_name,d.d_name FROM staff s,job j,department d WHERE s.`j_id`=j.j_id AND s.`d_id`=d.`d_id` and s.s_id = #{s_id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultType="com.java1234.entity.Staff">
+        select
+          s_id, s_name, sex, phone, email, j_id, school, card, d_id, lu, jointime
+        from personnel.staff
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultType="com.java1234.entity.Staff">
+        SELECT s.*,j.j_name,d.d_name FROM staff s,job j,department d WHERE s.`j_id`=j.j_id AND s.`d_id`=d.`d_id`
+
+            <if test="s_id != null">
+                and s.s_id = #{s_id}
+            </if>
+            <if test="s_name != null and s_name != ''">
+                and s.s_name like concat('%',#{s_name},'%')
+            </if>
+            <if test="sex != null and sex != ''">
+                and s.sex =#{sex}
+            </if>
+            <if test="phone != null and phone != ''">
+                and s.phone = #{phone}
+            </if>
+            <if test="email != null and email != ''">
+                and s.email = #{email}
+            </if>
+            <if test="j_id != null">
+                and s.j_id = #{j_id}
+            </if>
+            <if test="school != null and school != ''">
+                and s.school = #{school}
+            </if>
+            <if test="card != null and card != ''">
+                and s.card = #{card}
+            </if>
+            <if test="d_id != null">
+                and s.d_id = #{d_id}
+            </if>
+            <if test="lu != null and lu != ''">
+                and s.lu = #{lu}
+            </if>
+            <if test="jointime != null">
+                and s.jointime = #{jointime}
+            </if>
+
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="s_id" useGeneratedKeys="true">
+        insert into personnel.staff(s_name, sex, phone, email, j_id, school, card, d_id, lu, jointime)
+        values (#{s_name}, #{sex}, #{phone}, #{email}, #{j_id}, #{school}, #{card}, #{d_id}, #{lu}, #{jointime})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update personnel.staff
+        <set>
+            <if test="s_name != null and s_name != ''">
+                s_name = #{s_name},
+            </if>
+            <if test="sex != null and sex != ''">
+                sex = #{sex},
+            </if>
+            <if test="phone != null and phone != ''">
+                phone = #{phone},
+            </if>
+            <if test="email != null and email != ''">
+                email = #{email},
+            </if>
+            <if test="j_id != null">
+                j_id = #{j_id},
+            </if>
+            <if test="school != null and school != ''">
+                school = #{school},
+            </if>
+            <if test="card != null and card != ''">
+                card = #{card},
+            </if>
+            <if test="d_id != null">
+                d_id = #{d_id},
+            </if>
+            <if test="lu != null and lu != ''">
+                lu = #{lu},
+            </if>
+            <if test="jointime != null">
+                jointime = #{jointime},
+            </if>
+        </set>
+        where s_id = #{s_id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from personnel.staff where s_id = #{s_id}
+    </delete>
+
+</mapper>

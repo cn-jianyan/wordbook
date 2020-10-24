@@ -27,5 +27,12 @@
         <property name="maxInMemorySize" value="4096"/>
 
     </bean>
+    <mvc:interceptors>
+        <bean class="com.java1234.util.MyInterceptor"/>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <bean class="com.java1234.util.MyInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 
 </beans>
